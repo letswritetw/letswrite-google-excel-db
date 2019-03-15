@@ -24,7 +24,14 @@
       .row {
         margin-bottom: 1px;
       }
+      .col {
+        
+      }
       .card {
+        display: inline-block;
+        margin-right: 3%;
+        margin-bottom: 3%;
+        width: 30%;
         padding: 12px;
         border-radius: 8px;
         text-align: center;
@@ -42,51 +49,43 @@
 
     <div class="container">
       <h1>Member list</h1>
-      <div class="row">
-
-        <div class="four columns">
-          <div class="card">
-            <div class="avatar">
-              <img src="https://uinames.com/api/photos/female/12.jpg">
-            </div>
-            <div class="info">
-              <h4>Julia Harris</h4>
-              <p>05/06/1988</p>
-              <a class="button u-full-width" href="">julia-harris@example.com</a>
-            </div>
-          </div>
-        </div>
-
-        <div class="four columns">
-          <div class="card">
-            <div class="avatar">
-              <img src="https://uinames.com/api/photos/female/2.jpg">
-            </div>
-            <div class="info">
-              <h4>Lori Holland</h4>
-              <p>05/06/1988</p>
-              <a class="button u-full-width" href="">julia-harris@example.com</a>
-            </div>
-          </div>
-        </div>
-
-        <div class="four columns">
-          <div class="card">
-            <div class="avatar">
-              <img src="https://uinames.com/api/photos/female/25.jpg">
-            </div>
-            <div class="info">
-              <h4>Hannah Patterson</h4>
-              <p>05/06/1988</p>
-              <a class="button u-full-width" href="">julia-harris@example.com</a>
-            </div>
-          </div>
-        </div>
-
+      <div class="row js-append-card">
+        <!-- 這邊準備 append Card -->
       </div>
     </div>
 
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-    
+    <script>
+      $(function() {
+        $.get('https://spreadsheets.google.com/feeds/list/1-vTT5LVlscvExPjqJHrhmlO2ZMM-93McoP-yXT8gyOU/1/public/values?alt=json', function(data) {
+          var d = data.feed.entry;
+          var items = [];
+          for(var i in d) {
+            var item = {};
+            item.name = d[i].gsx$name.$t;
+            item.birthday = d[i].gsx$birthday.$t;
+            item.email = d[i].gsx$email.$t;
+            item.thumbnail = d[i].gsx$thumbnail.$t;
+            items.push(item);
+          }
+          console.table(items);
+          for(var i in items) {
+            var Card = `
+              <div class="card">
+                <div class="avatar">
+                  <img src="${items[i].thumbnail}">
+                </div>
+                <div class="info">
+                  <h4>${items[i].name}</h4>
+                  <p>${items[i].birthday}</p>
+                  <a class="button button-primary u-full-width" href="">${items[i].email}</a>
+                </div>
+              </div>
+            `;
+            $('.js-append-card').append(Card);
+          }
+        });
+      });
+    </script>
   </body>
 </html>
