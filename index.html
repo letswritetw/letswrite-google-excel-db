@@ -24,9 +24,6 @@
       .row {
         margin-bottom: 1px;
       }
-      .col {
-        
-      }
       .card {
         display: inline-block;
         margin-right: 3%;
@@ -42,6 +39,21 @@
       }
       h4 {
         margin-bottom: 0;
+      }
+      @media screen and (max-width: 1024px) {
+        .container {
+          width: 100%;
+        }
+        .card {
+          margin-right: 1.5%;
+          margin-left: 1.5%;
+          width: 45%;
+        }
+      }
+      @media screen and (max-width: 480px) {
+        .card {
+          width: 97%;
+        }
       }
     </style>
   </head>
