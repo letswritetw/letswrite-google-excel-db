@@ -9,14 +9,6 @@
   ],
   "creatorBuild" : "34127",
   "files" : {
-    "\/.gitattributes" : {
-      "cB" : 0,
-      "ft" : 8192,
-      "hM" : 0,
-      "oA" : 0,
-      "oAP" : "\/.gitattributes",
-      "oF" : 0
-    },
     "\/.gitignore" : {
       "cB" : 0,
       "ft" : 8192,
@@ -37,6 +29,19 @@
       "oF" : 0,
       "pg" : 0
     },
+    "\/fb.png" : {
+      "ft" : 32768,
+      "iS" : 472862,
+      "oA" : 0,
+      "oAP" : "\/fb.png",
+      "oF" : 0,
+      "oIPL" : 0,
+      "opt" : 0,
+      "oT" : 1,
+      "ou" : "lpckwebp-none",
+      "q" : 100,
+      "rq" : 75
+    },
     "\/index.html" : {
       "cB" : 0,
       "ft" : 8192,
@@ -53,7 +58,7 @@
       "oA" : 0,
       "oAP" : "\/index.html",
       "oF" : 0,
-      "oS" : 1
+      "oS" : 0
     },
     "\/LICENSE" : {
       "cB" : 0,
