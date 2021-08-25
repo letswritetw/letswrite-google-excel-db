@@ -1,120 +1,31 @@
-<!DOCTYPE html>
-<html lang="zh-TW">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>如何用Google Excel當作資料庫 - Augustus - Let's Write</title>
-    <link rel="canonical" href="https://letswrite.tw/google-excel-db/">
+<!DOCTYPE html><html lang="zh-TW"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><meta http-equiv="X-UA-Compatible" content="ie=edge"/><title>如何用 Google Sheets / Excel 當作資料庫 - Augustus - Let's Write</title><link rel="canonical" href="https://www.letswrite.tw/google-excel-db/"/><meta property="og:url" content="https://letswritetw.github.io/letswrite-google-excel-db/"/><meta property="fb:app_id" content="911000986339138"/><meta property="og:type" content="website"/><meta property="og:site_name" content="Let's Write"/><meta property="og:title" content="如何用 Google Sheets / Excel 當作資料庫 - Augustus - Let's Write"/><meta itemprop="name" content="如何用 Google Sheets / Excel 當作資料庫 - Augustus - Let's Write"/><meta name="description" content="本篇大綱：本篇會用到的資源：資料、樣式、原始檔。建立 Google Sheets、發佈 Google Sheets 到網路、建一個會員列表的頁面、從 Google Sheets 接資料。這一篇是如何把 Google Sheets 當作資料庫，並實作出一個簡單的會員列表頁出來。"/><meta property="og:description" content="本篇大綱：本篇會用到的資源：資料、樣式、原始檔。建立 Google Sheets、發佈 Google Sheets 到網路、建一個會員列表的頁面、從 Google Sheets 接資料。這一篇是如何把 Google Sheets 當作資料庫，並實作出一個簡單的會員列表頁出來。"/><meta itemprop="description" content="本篇大綱：本篇會用到的資源：資料、樣式、原始檔。建立 Google Sheets、發佈 Google Sheets 到網路、建一個會員列表的頁面、從 Google Sheets 接資料。這一篇是如何把 Google Sheets 當作資料庫，並實作出一個簡單的會員列表頁出來。"/><meta itemprop="image" content="https://letswritetw.github.io/letswrite-google-excel-db/fb.jpg"/><meta property="og:image" content="https://letswritetw.github.io/letswrite-google-excel-db/fb.jpg"/><meta property="og:image:width" content="1200"/><meta property="og:image:height" content="630"/><meta property="og:image:alt" content="如何用 Google Sheets / Excel 當作資料庫"/><link rel="shortcut icon" href="https://letswritetw.github.io/letswritetw/dist/img/logo_512.png"/><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/dark.css" media="screen"/><link rel="stylesheet" href="dist/style.min.css" media="screen"/><!-- Google Tag Manager--><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-PGQ9WQT');</script></head><body><!-- Google Tag Manager (noscript)--><noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PGQ9WQT" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript><div class="text-center"><h1>如何用 Google Sheets / Excel 當作資料庫</h1><h6>筆記文：<a href="https://www.letswrite.tw/google-excel-db/">Let's Write</a></h6></div><hr/><section class="js-append-card"></section><script>const uri = 'https://sheets.googleapis.com/v4/spreadsheets/1-vTT5LVlscvExPjqJHrhmlO2ZMM-93McoP-yXT8gyOU/values/工作表1?alt=json&key=AIzaSyAVlwHA4EQx7AWjK1QsT87shL37vhKWrl4';
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css">
+fetch(uri)
+  .then(res => res.json())
+  .then(res => {
+    const data = res.values;
+    console.log(data);
 
-    <!-- customized style -->
-    <style>
-      *, *::before, *::after {
-        box-sizing: border-box;
-        font-size: 16px;
-      }
-      body {
-        background: #EEE;
-      }
-      h1 {
-        padding-top: 16px;
-      }
-      .row {
-        margin-bottom: 1px;
-      }
-      .card {
-        display: inline-block;
-        margin-right: 3%;
-        margin-bottom: 3%;
-        width: 30%;
-        padding: 12px;
-        border-radius: 8px;
-        text-align: center;
-        box-shadow: 0 1px 3px rgba(0, 0, 0, .12), 0 1px 2px rgba(0, 0, 0, .24)
-      }
-      .avatar img {
-        border-radius: 50%;
-      }
-      h4 {
-        margin-bottom: 0;
-      }
-      @media screen and (max-width: 1024px) {
-        .container {
-          width: 100%;
-        }
-        .card {
-          margin-right: 1.5%;
-          margin-left: 1.5%;
-          width: 45%;
-        }
-      }
-      @media screen and (max-width: 480px) {
-        .card {
-          width: 97%;
-        }
-      }
-    </style>
+    // 刪除第一個陣列
+    data.shift();
 
-    <link rel="shortcut icon" href="https://letswritetw.github.io/letswritetw/dist/img/logo_512.png"/>
-
-    <!-- Google Tag Manager-->
-    <script>
-      (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-      new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-      j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-      'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-      })(window,document,'script','dataLayer','GTM-PGQ9WQT');
-    </script>
-
-  </head>
-  <body>
-
-    <!-- Google Tag Manager (noscript)-->
-    <noscript>
-      <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PGQ9WQT" height="0" width="0" style="display:none;visibility:hidden"></iframe>
-    </noscript>
-
-    <div class="container">
-      <h1>Member list</h1>
-      <div class="row js-append-card">
-        <!-- 這邊準備 append Card -->
-      </div>
-    </div>
-
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-    <script>
-      $(function() {
-        $.get('https://spreadsheets.google.com/feeds/list/1-vTT5LVlscvExPjqJHrhmlO2ZMM-93McoP-yXT8gyOU/1/public/values?alt=json', function(data) {
-          var d = data.feed.entry;
-          var items = [];
-          for(var i in d) {
-            var item = {};
-            item.name = d[i].gsx$name.$t;
-            item.birthday = d[i].gsx$birthday.$t;
-            item.email = d[i].gsx$email.$t;
-            item.thumbnail = d[i].gsx$thumbnail.$t;
-            items.push(item);
-          }
-          console.table(items);
-          for(var i in items) {
-            var Card = `
-              <div class="card">
-                <div class="avatar">
-                  <img src="${items[i].thumbnail}">
-                </div>
-                <div class="info">
-                  <h4>${items[i].name}</h4>
-                  <p>${items[i].birthday}</p>
-                  <a class="button button-primary u-full-width" href="">${items[i].email}</a>
-                </div>
-              </div>
-            `;
-            $('.js-append-card').append(Card);
-          }
-        });
-      });
-    </script>
-  </body>
-</html>
+    Array.prototype.forEach.call(data, d => {
+      let Card = `
+        <div class="card">
+          <div class="avatar">
+            <img src="${d[1]}">
+          </div>
+          <div class="text-center">
+            <h4>${d[0]}</h4>
+            <p>${d[3]}</p>
+            <a href="">${d[2]}</a>
+          </div>
+        </div>`;
+      
+      document.querySelector('.js-append-card').insertAdjacentHTML('beforeend', Card);
+    })
+  })</script></body></html>

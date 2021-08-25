@@ -1,0 +1,90 @@
+- var link = 'google-excel-db'
+- var title = '如何用 Google Sheets / Excel 當作資料庫'
+- var description = '本篇大綱：本篇會用到的資源：資料、樣式、原始檔。建立 Google Sheets、發佈 Google Sheets 到網路、建一個會員列表的頁面、從 Google Sheets 接資料。這一篇是如何把 Google Sheets 當作資料庫，並實作出一個簡單的會員列表頁出來。'
+
+<!DOCTYPE html>
+html(lang="zh-TW")
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    meta(http-equiv="X-UA-Compatible", content="ie=edge")
+    title #{title} - Augustus - Let's Write
+
+    link(rel="canonical", href=`https://www.letswrite.tw/${link}/`)
+    meta(property="og:url", content=`https://letswritetw.github.io/letswrite-${link}/`)
+
+    meta(property="fb:app_id", content="911000986339138")
+    meta(property="og:type", content="website")
+
+    meta(property="og:site_name", content="Let's Write")
+    meta(property="og:title", content=`${title} - Augustus - Let's Write`)
+    meta(itemprop="name", content=`${title} - Augustus - Let's Write`)
+
+    meta(name="description", content=description)
+    meta(property="og:description", content=description)
+    meta(itemprop="description", content=description)
+
+    meta(itemprop="image", content=`https://letswritetw.github.io/letswrite-${link}/fb.jpg`)
+    meta(property="og:image", content=`https://letswritetw.github.io/letswrite-${link}/fb.jpg`)
+    meta(property="og:image:width", content="1200")
+    meta(property="og:image:height", content="630")
+    meta(property="og:image:alt", content=title)
+
+    link(rel="shortcut icon", href="https://letswritetw.github.io/letswritetw/dist/img/logo_512.png")
+
+    //- css
+    link(rel="stylesheet", href="https://cdn.jsdelivr.net/npm/water.css@2/out/dark.css", media="screen")
+    link(rel="stylesheet", href="dist/style.min.css", media="screen")
+
+    // Google Tag Manager
+    script.
+      (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+      new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+      j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+      'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+      })(window,document,'script','dataLayer','GTM-PGQ9WQT');
+  body
+
+    // Google Tag Manager (noscript)
+    noscript
+      iframe(src="https://www.googletagmanager.com/ns.html?id=GTM-PGQ9WQT", height="0", width="0", style="display:none;visibility:hidden")
+    
+    .text-center
+      h1=title
+      h6 筆記文：
+        a(href="https://www.letswrite.tw/google-excel-db/") Let's Write
+      
+    hr
+
+    section.js-append-card
+
+    script.
+      
+      const uri = 'https://sheets.googleapis.com/v4/spreadsheets/1-vTT5LVlscvExPjqJHrhmlO2ZMM-93McoP-yXT8gyOU/values/工作表1?alt=json&key=AIzaSyAVlwHA4EQx7AWjK1QsT87shL37vhKWrl4';
+
+      fetch(uri)
+        .then(res => res.json())
+        .then(res => {
+          const data = res.values;
+          console.log(data);
+
+          // 刪除第一個陣列
+          data.shift();
+
+          Array.prototype.forEach.call(data, d => {
+            let Card = `
+              <div class="card">
+                <div class="avatar">
+                  <img src="${d[1]}">
+                </div>
+                <div class="text-center">
+                  <h4>${d[0]}</h4>
+                  <p>${d[3]}</p>
+                  <a href="">${d[2]}</a>
+                </div>
+              </div>`;
+            
+            document.querySelector('.js-append-card').insertAdjacentHTML('beforeend', Card);
+          })
+        })
+

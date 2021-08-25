@@ -1,0 +1,29 @@
+*, *::before, *::after
+	box-sizing: border-box
+
+.text-center
+	text-align: center
+
+.js-append-links
+	a
+		color: rgba(#FFF, .8) !important
+		&:hover
+			color: #FFF !important
+
+.js-append-card
+	display: flex
+	flex-wrap: wrap
+	justify-content: space-around
+	.card
+		margin-bottom: 3rem
+		width: 30%
+	.avatar img
+		display: block
+		margin-right: auto
+		margin-left: auto
+		border-radius: 50%
+
+@media screen and (max-width: 480px)
+	.js-append-card
+		.card
+			width: 100%
